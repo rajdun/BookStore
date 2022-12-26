@@ -1,10 +1,12 @@
 using BookStore.Db;
 using BookStore.Models;
 using BookStore.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class AuthorController : ControllerBase
@@ -37,7 +39,7 @@ public class AuthorController : ControllerBase
     {
         try
         {
-            return Ok(_service.GetAuthors());
+            return Ok(_service.GetAuthorById(authorId));
         }
         catch (Exception ex)
         {
@@ -45,7 +47,7 @@ public class AuthorController : ControllerBase
             return BadRequest(ex.Message); 
         }
     }
-
+    
     [HttpPut]
     public ActionResult<DbAuthor> PutAuthor(Author author)
     {
@@ -60,7 +62,7 @@ public class AuthorController : ControllerBase
             return BadRequest(ex.Message); 
         }
     }
-
+    
     [HttpPatch]
     public ActionResult<DbAuthor> UpdateAuthor(Author author, [FromQuery] int authorId)
     {
@@ -78,7 +80,7 @@ public class AuthorController : ControllerBase
             return BadRequest(ex.Message); 
         }
     }
-
+    
     [HttpDelete]
     public ActionResult DeleteAuthor([FromQuery] int authorId)
     {

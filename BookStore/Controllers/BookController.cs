@@ -1,10 +1,12 @@
 using BookStore.Db;
 using BookStore.Models;
 using BookStore.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class BookController : ControllerBase
@@ -46,7 +48,7 @@ public class BookController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
+    
     [HttpPut]
     public ActionResult<DbAuthor> PutBook(Book book, [FromQuery]int authorId)
     {
@@ -63,7 +65,7 @@ public class BookController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
+    
     [HttpDelete]
     public ActionResult DeleteBook([FromQuery] int bookId)
     {
@@ -79,7 +81,7 @@ public class BookController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
+    
     [HttpPatch]
     public ActionResult<DbBook> UpdateBook(Book book, [FromQuery] int bookId)
     {
@@ -117,7 +119,7 @@ public class BookController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
+    
     [HttpPost("rating")]
     public ActionResult AddRating(Models.Rating rating)
     {
@@ -131,7 +133,7 @@ public class BookController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
+    
     [HttpDelete("rating")]
     public ActionResult DeleteRating([FromQuery] int bookId)
     {

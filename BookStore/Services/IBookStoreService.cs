@@ -1,5 +1,7 @@
 using BookStore.Db;
+using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookStore.Services;
 
@@ -18,6 +20,6 @@ public interface IBookStoreService
     public ICollection<DbBook> GetBooks();
     public ICollection<DbBook> GetBooksForAuthor(DbAuthor author);
 
-    public void AddRating(User user, DbBook book, RatingScore score);
-    public void RemoveRating(User user, DbBook book);
+    public void AddRating(IdentityUser user, DbBook book, RatingScore score);
+    public void RemoveRating(IdentityUser user, DbBook book);
 }

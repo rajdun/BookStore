@@ -1,5 +1,8 @@
+using System.Security.Cryptography;
+using System.Text;
 using BookStore.Db;
 using BookStore.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookStore.Services;
 
@@ -80,7 +83,7 @@ public class BookStoreService : IBookStoreService
         return _db.Book.Where(b => b.AuthorId == author.Id).ToList();
     }
 
-    public void AddRating(User user, DbBook book, RatingScore score)
+    public void AddRating(IdentityUser user, DbBook book, RatingScore score)
     {
         var rating = this.CreateRating(user, book, score);
 
@@ -96,7 +99,7 @@ public class BookStoreService : IBookStoreService
         _db.SaveChanges();
     }
 
-    public void RemoveRating(User user, DbBook book)
+    public void RemoveRating(IdentityUser user, DbBook book)
     {
         var rating = _db.Rating.SingleOrDefault(r => (r.Book.Id == book.Id) && (r.User.Id == user.Id));
         if (rating != null)
@@ -107,7 +110,7 @@ public class BookStoreService : IBookStoreService
     }
 
     // Private
-    private Db.Rating CreateRating(User user, DbBook book, RatingScore score)
+    private Db.Rating CreateRating(IdentityUser user, DbBook book, RatingScore score)
     {
         Db.Rating rating = new Db.Rating()
         {
